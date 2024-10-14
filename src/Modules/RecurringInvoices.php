@@ -51,4 +51,20 @@ class RecurringInvoices extends Documents
     {
         return 'recurring_invoice_id';
     }
+
+    /**
+     * Return all child invoices list
+     * @param $id
+     * @param array|null $params
+     * @return array
+     * @throws \Webleit\ZohoBooksApi\Exceptions\ErrorResponseException
+     */
+    public function getChildInvoices($id, ?array $params = []): array
+    {
+        $url = $this->client->getUrl() . $this->getUrl() . '/' . $id . '/invoices';
+
+        $items = json_decode($this->client->rawGet($url, $params)->getContents(), true);
+
+        return $items;
+    }
 }
